@@ -70,6 +70,11 @@ function paymentSummary(invoice: Invoice): DemoPaymentSummary {
   return { invoiceId: invoice.id, invoiceNumber: invoice.invoiceNumber, status: amountPaid >= invoice.total ? 'Paid' : amountPaid > 0 ? 'PartiallyPaid' : 'Issued', invoiceTotal: invoice.total, amountPaid, balanceDue: Math.max(0, invoice.total - amountPaid), payments: invoicePayments }
 }
 
+function normalizeJob(job: ServiceJob | undefined): ServiceJob | undefined {
+  if (!job) return undefined
+  return { ...job, priority: job.priority ?? 'Normal', status: job.status ?? 'New' }
+}
+
 export async function demoRequest<T>(path: string, init: RequestInit = {}): Promise<T> {
   const [rawPath, rawQuery] = path.split('?')
   const parts = rawPath.split('/').filter(Boolean)
@@ -95,9 +100,9 @@ export async function demoRequest<T>(path: string, init: RequestInit = {}): Prom
       if (method === 'POST' && !jobId) { const job = { id: `demo-job-${Date.now()}`, tenantId: demoTenantId, customerId: String(body.customerId), assignedTechnicianId: null, jobNumber: `JOB-20260823-${Math.random().toString(16).slice(2, 8).toUpperCase()}`, title: String(body.title), description: String(body.description ?? ''), priority: String(body.priority) as JobPriority, status: 'New' as const, scheduledStartUtc: null, scheduledEndUtc: null, createdAtUtc: now.toISOString(), updatedAtUtc: now.toISOString() }; jobs = [job, ...jobs]; return job as T }
       const status = query.get('status')
       const search = query.get('search')?.toLowerCase() ?? ''
-      return jobs.filter((job) => (!status || job.status === status) && (!search || `${job.jobNumber} ${job.title} ${job.description}`.toLowerCase().includes(search))) as T
+      return jobs.map((job) => normalizeJob(job)!).filter((job) => (!status || job.status === status) && (!search || `${job.jobNumber} ${job.title} ${job.description}`.toLowerCase().includes(search))) as T
     }
-    if (jobId && parts.at(-1) === jobId) return jobs.find((job) => job.id === jobId) as T
+    if (jobId && parts.at(-1) === jobId) return normalizeJob(jobs.find((job) => job.id === jobId)) as T
     if (jobId && parts.at(-1) === 'line-items' && method === 'POST') {
       const item = { id: `demo-quote-line-${Date.now()}`, tenantId: demoTenantId, serviceJobId: jobId, description: String(body.description), quantity: Number(body.quantity), unitPrice: Number(body.unitPrice), lineTotal: Number(body.quantity) * Number(body.unitPrice), createdAtUtc: now.toISOString() }
       quoteItems[jobId] = [...(quoteItems[jobId] ?? []), item]
