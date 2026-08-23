@@ -37,9 +37,15 @@ export async function getJobById(
   tenantId: string,
   jobId: string,
 ): Promise<ServiceJob> {
-  return apiRequest<ServiceJob>(
+  const job = await apiRequest<ServiceJob>(
     `/api/tenants/${tenantId}/jobs/${jobId}`,
   )
+
+  return {
+    ...job,
+    priority: job.priority ?? ('Normal' as JobPriority),
+    status: job.status ?? ('New' as JobStatus),
+  }
 }
 
 export interface CreateJobRequest {
