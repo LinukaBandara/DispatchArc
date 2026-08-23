@@ -1,8 +1,16 @@
 # DispatchArc
 
-DispatchArc is a multi-tenant field-service operations platform built with ASP.NET Core, Entity Framework Core and PostgreSQL.
+DispatchArc is a multi-tenant field-service operations platform built with **ASP.NET Core, Entity Framework Core and PostgreSQL**.
 
-The backend covers the full service workflow from customer intake and job creation through technician assignment, scheduling, quotes, invoicing, payments, dashboards and operational alerts.
+It manages the service lifecycle from customer intake and job creation through technician assignment, scheduling, quotes, invoicing, payments, dashboards and operational alerts, with a dispatcher-facing web dashboard for day-to-day operations.
+
+🔗 **Live Demo:** https://dispatch-arc-eight.vercel.app/
+
+## Overview
+
+DispatchArc is designed for service businesses that need a centralized system to manage customers, field technicians, service jobs and financial operations.
+
+The platform combines a structured backend API with a web-based operations dashboard and enforces tenant isolation, role-based access and business workflow rules across the application.
 
 ## Core capabilities
 
@@ -22,6 +30,7 @@ The backend covers the full service workflow from customer intake and job creati
 - Concurrency-safe payment processing
 - Business dashboard metrics
 - Operational alerts
+- Dispatcher-facing web dashboard
 - Swagger / OpenAPI documentation
 - PostgreSQL persistence
 - Entity Framework Core migrations
@@ -43,6 +52,12 @@ The backend covers the full service workflow from customer intake and job creati
 | Containers | Docker Compose |
 | Testing | xUnit + WebApplicationFactory |
 | CI | GitHub Actions |
+
+## Screenshots
+
+The application includes a dispatcher-facing dashboard for managing operational workflows.
+
+> Screenshots will be added as the UI is finalized for the portfolio release.
 
 ## Architecture
 
@@ -71,7 +86,7 @@ The Domain layer contains core entities, enums and domain rules.
 
 The Infrastructure layer implements repositories, Entity Framework Core persistence and PostgreSQL integration.
 
-For more detail, see `docs/ARCHITECTURE.md`.
+For more detail, see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
 ## Repository structure
 
@@ -89,6 +104,7 @@ For more detail, see `docs/ARCHITECTURE.md`.
     +-- docs/
     |   +-- API.md
     |   +-- ARCHITECTURE.md
+    |   +-- PRODUCTION.md
     |
     +-- .github/workflows/
     |   +-- ci.yml
@@ -198,7 +214,7 @@ DispatchArc currently defines four roles:
 | Technician | Assigned field-work and technician-update workflows |
 | Finance | Invoicing, payments and financial operations |
 
-Authorization policies are intentionally narrower than simple role names. See `docs/API.md` for the access model.
+Authorization policies are intentionally narrower than simple role names. See [`docs/API.md`](docs/API.md) for the access model.
 
 ## Service-job lifecycle
 
@@ -248,9 +264,7 @@ Payment processing includes:
 
 Interactive documentation is available in Development through Swagger.
 
-Detailed endpoint groups and authorization information are documented in:
-
-    docs/API.md
+Detailed endpoint groups and authorization information are documented in [`docs/API.md`](docs/API.md).
 
 ## Tests
 
@@ -295,21 +309,30 @@ A healthy response indicates that DispatchArc can connect to PostgreSQL.
 - Existing tokens are checked against current user state.
 - Financial writes use transaction and concurrency safeguards.
 
-## Current backend scope
+## Current project status
 
-The current repository contains the backend platform and API.
+DispatchArc currently includes:
 
-A dispatcher-facing frontend/dashboard is a separate future phase.
+- A layered ASP.NET Core backend and API
+- PostgreSQL persistence with Entity Framework Core
+- JWT authentication and role-based authorization
+- Multi-tenant business isolation
+- Service-job, scheduling and technician workflows
+- Quotes, invoices and payment processing
+- Operational dashboard and alert functionality
+- Integration testing and GitHub Actions CI
+- Docker-based local PostgreSQL development
+- A deployed web application at the live-demo URL above
+
+The project is being developed as a portfolio-grade full-stack software engineering project, with further UI polish and production deployment improvements planned.
 
 ## License
 
-No open-source license has been declared for this repository.
+Portfolio/demonstration project — not licensed for reuse.
+
 ## Production deployment
 
-Production configuration, trusted reverse-proxy handling,
-health/readiness behavior and secret requirements are documented in:
-
-    docs/PRODUCTION.md
+Production configuration, trusted reverse-proxy handling, health/readiness behavior and secret requirements are documented in [`docs/PRODUCTION.md`](docs/PRODUCTION.md).
 
 A non-secret environment-variable template is available at:
 
