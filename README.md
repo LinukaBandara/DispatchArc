@@ -55,9 +55,33 @@ The platform combines a structured backend API with a web-based operations dashb
 
 ## Screenshots
 
-The application includes a dispatcher-facing dashboard for managing operational workflows.
+### Dashboard
 
-> Screenshots will be added as the UI is finalized for the portfolio release.
+![DispatchArc Dashboard](docs/screenshots/dashboard.png)
+
+### Jobs
+
+![DispatchArc Jobs](docs/screenshots/jobs.png)
+
+### Job Details
+
+![DispatchArc Job Details](docs/screenshots/job-details.png)
+
+### Customers
+
+![DispatchArc Customers](docs/screenshots/customers.png)
+
+### Technicians
+
+![DispatchArc Technicians](docs/screenshots/technicians.png)
+
+### Invoices
+
+![DispatchArc Invoices](docs/screenshots/invoices.png)
+
+### Payments
+
+![DispatchArc Payments](docs/screenshots/payments.png)
 
 ## Architecture
 
@@ -105,6 +129,14 @@ For more detail, see [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
     |   +-- API.md
     |   +-- ARCHITECTURE.md
     |   +-- PRODUCTION.md
+    |   +-- screenshots/
+    |       +-- dashboard.png
+    |       +-- jobs.png
+    |       +-- job-details.png
+    |       +-- customers.png
+    |       +-- technicians.png
+    |       +-- invoices.png
+    |       +-- payments.png
     |
     +-- .github/workflows/
     |   +-- ci.yml
