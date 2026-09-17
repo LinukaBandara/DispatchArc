@@ -312,8 +312,9 @@
   .login-page {
     grid-template-columns: 1fr;
     min-height: 100svh;
-    height: 100svh;
-    overflow: hidden;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .login-brand-panel {
